@@ -1,7 +1,7 @@
 # C++ Snippets for DS and Algo 
 
 ## List 
-+ [Disjoint set union](https://github.com/yash30201/snippets/#disjoint-set-union)
++ [Disjoint set union](#disjoint-set-union)
 
 ---
 ### Disjoint set union
