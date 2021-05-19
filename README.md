@@ -2,10 +2,12 @@
 
 ## List 
 + [Disjoint set union](https://github.com/yash30201/snippets/#disjoint-set-union)
++ [Dijkstra algorithm](https://github.com/yash30201/snippets/#disjoint-set-union)
 
 ---
 ### Disjoint set union
 ```cpp
+// DSU , rank heuristic + path compression
 // DSU , rank heuristic + path compression
 struct Dsu{
 	vector<int> par, rank;
@@ -17,17 +19,21 @@ struct Dsu{
 	inline int get(int a){
 		return par[a] = (par[a] == a ? a : get(par[a]));
 	}
-	void join(int a, int b){
+	// return true if they already belong to same set
+	bool join(int a, int b){
 		a = get(a);
 		b = get(b);
-		if(a == b) return;
+		if(a == b) return true;
 		if(rank[a] == rank[b]) rank[a]++;
 		(rank[a] >= rank[b] ? par[b] = a : par[a] = b);
+		return false;
 	}
 };
+
 // Size heuristic + path compression
 // maintains sum, maximum and minimum of sets
 // arr is 0-indexed based but all the operations are 1-indexed based
+
 struct Dsu{
 	vector<int> par, sz, maxi, mini, sum;
 	Dsu(vector<int> &arr){
@@ -52,8 +58,44 @@ struct Dsu{
 		mini[a] = min(mini[a], mini[b]);
 		par[b] = a;
 	}
-	
 };
 ```
+---
+### Dijkstra algorithm for shortest path in weighted graph
+```cpp
+struct DJ{
+	vector<int> dist;
+	const int inf = 1e15;
+	// @param v = adjacency list with edge weights as second in pair.
+	// 		Eg : v[u] = [{v1, wt}, {v2, wt}.....]
+	// @param n = number of total nodes
+	// Note - The dist matrix is 1 based indexed.
+	DJ(vector<pair<int,int>> v[], int source, int n){
+		dist = vector<int>(n + 1, inf);
+		dist[source] = 0;
+		priority_queue<
+			pair<int,int>,
+			vector<pair<int,int>>,
+			greater<pair<int,int>>
+		> pq;
+		pq.push({(int)0, source});
+		
+		// Start algo
+		while(!pq.empty()){
+			auto [wt, x] = pq.top();
+			pq.pop();
+			if(dist[x] < wt) continue;
+			for(auto [y, ewt] : v[x]){
+				if(dist[y] > dist[x] + ewt){
+					dist[y] = dist[x] + ewt;
+					pq.push({dist[y], y});
+				}
+			}
+		}
+	}
+};
+
+```
+
 
 
