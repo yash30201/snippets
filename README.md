@@ -1,13 +1,12 @@
 # C++ Snippets for DS and Algo 
 
 ## List 
-+ [Disjoint set union](https://github.com/yash30201/snippets/#disjoint-set-union)
-+ [Dijkstra algorithm](https://github.com/yash30201/snippets/#disjoint-set-union)
++ [Disjoint set union](#disjoint-set-union)
++ [Dijkstra algorithm](#dijkstra-algorithm)
 
 ---
 ### Disjoint set union
 ```cpp
-// DSU , rank heuristic + path compression
 // DSU , rank heuristic + path compression
 struct Dsu{
 	vector<int> par, rank;
@@ -61,7 +60,7 @@ struct Dsu{
 };
 ```
 ---
-### Dijkstra algorithm for shortest path in weighted graph
+### Dijkstra algorithm
 ```cpp
 struct DJ{
 	vector<int> dist;
