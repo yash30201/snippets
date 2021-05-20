@@ -4,7 +4,7 @@
 + [Disjoint set union](#disjoint-set-union)
 + [Dijkstra algorithm](#dijkstra-algorithm)
 + [Longest increasing subsequence](#Longest-increasing-subsequence)
-+ [Next/Previous smaller/greater element](#Next/Previous-smaller/greater-element)
++ [Next/Previous smaller/greater element](#NextPrevious-smallergreater-element)
 
 ---
 ### Disjoint set union
