@@ -6,6 +6,7 @@
 + [Longest increasing subsequence](#Longest-increasing-subsequence)
 + [Next/Previous smaller/greater element](#NextPrevious-smallergreater-element)
 + [Longest common subsequence](#Longest-common-subsequence)
++ [Tries](#Tries)
 
 ---
 ### Disjoint set union
@@ -207,6 +208,38 @@ struct Lcs{
 			else j--;
 		}
 		reverse(lcs.begin(), lcs.end());
+	}
+};
+```
+---
+
+### Tries
+```cpp
+struct Trie{
+	int nextNode = 1;
+	vector<vector<int>> node;
+	vector<bool> isEnd;
+	static const int maxNodesInTrie = 1e6 + 100;
+	Trie(){
+		node = vector<vector<int>>(maxNodesInTrie, vector<int>(26, -1));
+		isEnd = vector<bool>(maxNodesInTrie, false);
+	}
+	void insert(string &s){
+		int ix = 0;
+		for(int i = 0 ; i < s.length() ; i++){
+			if(node[ix][s[i] - 'a'] == -1) ix = node[ix][s[i] - 'a'] = nextNode++;
+			else ix = node[ix][s[i] - 'a'];
+		}
+		isEnd[ix] = true;
+		return;
+	}
+	bool search(string &s){
+		int ix = 0;
+		for(int i = 0 ; i < s.length() ; i++){
+			if(node[ix][s[i] - 'a'] == -1) return false;
+			ix = node[ix][s[i] - 'a'];
+		}
+		return isEnd[ix];
 	}
 };
 ```
