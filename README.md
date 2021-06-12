@@ -7,6 +7,7 @@
 + [Next/Previous smaller/greater element](#NextPrevious-smallergreater-element)
 + [Longest common subsequence](#Longest-common-subsequence)
 + [Tries](#Tries)
++ [Primes](#Primes)
 
 ---
 ### Disjoint set union
@@ -244,4 +245,50 @@ struct Trie{
 };
 ```
 
-
+### Primes
+```cpp
+struct Prime{
+	vector<bool> isPrime; // isPrime[i] Stores whether i is prime or not
+	vector<int> arr; // arr stores all the prime numbers
+	int cnt; // cnt = arr.size()
+	
+	Prime(int n){ // Process....Using Sieve and wheel factorisation
+		isPrime = vector<bool>(n+1, true);
+		isPrime[0] = isPrime[1] = false;
+		arr.emplace_back(2);
+		for(int i = 4 ; i <= n ; i+=2) isPrime[i] = false;
+		for(int i = 3 ; i <= n ; i+=2){
+			if(!isPrime[i]) continue;
+			arr.emplace_back(i);
+			for(int j = i*i ; j <= n ; j+=i) isPrime[j] = false;
+		}
+		cnt = arr.size();
+	}
+	
+	int primePowerSum(int n){// sum of powers of primes in prime factorisation
+		int res = 0;
+		for(auto &i : arr){
+			if(i * i > n) break;
+			while(n % i == 0){
+				res++;
+				n /= i;
+			}
+		}
+		if(n > 1) res++;
+		return res;
+	}
+	
+	map<int,int> factorise(int n){ // prime factoisation of number n
+		map<int,int> mp;
+		for(auto &i : arr){
+			if(i * i > n) break;
+			while(n % i == 0){
+				mp[i]++;
+				n /= i;
+			}
+		}
+		if(n > 1) mp[n]++;
+		return mp;
+	}
+};
+```
