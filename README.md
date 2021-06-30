@@ -217,32 +217,35 @@ struct Lcs{
 ### Tries
 ```cpp
 struct Trie{
-	int nextNode = 1;
-	vector<vector<int>> node;
-	vector<bool> isEnd;
-	static const int maxNodesInTrie = 1e6 + 100;
+	Trie *children[26];
+	bool is_leaf;
 	Trie(){
-		node = vector<vector<int>>(maxNodesInTrie, vector<int>(26, -1));
-		isEnd = vector<bool>(maxNodesInTrie, false);
+		for(int i = 0 ;i < 26 ; i++) this->children[i] = NULL;
+		this->is_leaf = false;
 	}
+	
 	void insert(string &s){
-		int ix = 0;
-		for(int i = 0 ; i < s.length() ; i++){
-			if(node[ix][s[i] - 'a'] == -1) ix = node[ix][s[i] - 'a'] = nextNode++;
-			else ix = node[ix][s[i] - 'a'];
+		Trie *root = this;
+		for(char c : s){
+			if(root->children[c-'a'] == NULL) root->children[c - 'a'] = new Trie();
+			root = root->children[c-'a'];
 		}
-		isEnd[ix] = true;
-		return;
+		root->is_leaf = true;
 	}
+	
 	bool search(string &s){
-		int ix = 0;
-		for(int i = 0 ; i < s.length() ; i++){
-			if(node[ix][s[i] - 'a'] == -1) return false;
-			ix = node[ix][s[i] - 'a'];
+		Trie *root = this;
+		for(char c : s){
+			if(root->children[c-'a'] == NULL) return false;
+			root = root->children[c-'a'];
 		}
-		return isEnd[ix];
+		return root->is_leaf;
 	}
 };
+
+// Trie *root = new Trie();
+// root->insert(str);
+// root->search(str);
 ```
 ---
 ### Primes
