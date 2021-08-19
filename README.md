@@ -402,6 +402,7 @@ struct Lca{ //  This is zero based
 ### Coordinate Compressor
 ```cpp
 struct CoordinateCompressor {
+	int sz;
     vector<int> master;
     CoordinateCompressor() { master.clear(); }
     void add(vector<int>& a) {
@@ -410,6 +411,7 @@ struct CoordinateCompressor {
     void process() {
         sort(master.begin(), master.end());
         master.resize(unique(master.begin(), master.end()) - master.begin());
+        sz = master.size();
     }
     void set(vector<int>& a) {
         for (int& i : a) {
