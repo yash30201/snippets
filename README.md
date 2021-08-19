@@ -11,6 +11,7 @@
 + [Smallest Prime Factor](#Smallest-prime-factor)
 + [Binomial Coefficients](#Binomial-Coefficients)
 + [Lowest Common Ancestor(binary lifting)](#Lowest-common-ancestor)
++ [Coordinate Compressor](#Coordinate-Compressor)
 
 ---
 ### Disjoint set union
@@ -395,5 +396,25 @@ struct Lca{ //  This is zero based
 		int lca = getLca(x, y);
 		return dist[x] + dist[y] - (dist[lca]<<1);
 	}
+};
+```
+
+### Coordinate Compressor
+```cpp
+struct CoordinateCompressor {
+    vector<int> master;
+    CoordinateCompressor() { master.clear(); }
+    void add(vector<int>& a) {
+        for (int i : a) master.emplace_back(i);
+    }
+    void process() {
+        sort(master.begin(), master.end());
+        master.resize(unique(master.begin(), master.end()) - master.begin());
+    }
+    void set(vector<int>& a) {
+        for (int& i : a) {
+            i = lower_bound(master.begin(), master.end(), i) - master.begin();
+        }
+    }
 };
 ```
