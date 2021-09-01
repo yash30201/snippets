@@ -123,7 +123,6 @@ struct Lis {
 };
 ```
 ---
-
 ### Next/Previous smaller/greater element
 ```cpp
 struct Nextprev{
@@ -319,7 +318,6 @@ struct Spf{
 };
 ```
 ---
-
 ### Binomial Coefficients
 ```cpp
 struct BinomialCoefficients{
@@ -351,7 +349,6 @@ struct BinomialCoefficients{
 ```
 
 ---
-
 ### Lowest Common Ancestor
 ```cpp
 struct Lca{ //  This is zero based
@@ -401,7 +398,6 @@ struct Lca{ //  This is zero based
 };
 ```
 ---
-
 ### Coordinate Compressor
 ```cpp
 struct CoordinateCompressor {
@@ -434,7 +430,6 @@ struct CoordinateCompressor {
 };
 ```
 ---
-
 ### Iterative segment tree
 ```cpp
 struct seg_tree{
@@ -484,7 +479,6 @@ struct seg_tree{
 ```
 
 ---
-
 ### Lazy segment tree
 ```cpp
 struct lazy_segtree{
