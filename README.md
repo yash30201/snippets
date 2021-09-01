@@ -12,6 +12,8 @@
 + [Binomial Coefficients](#Binomial-Coefficients)
 + [Lowest Common Ancestor(binary lifting)](#Lowest-common-ancestor)
 + [Coordinate Compressor](#Coordinate-Compressor)
++ [Iterative segment tree](#iterative-segment-tree)
++ [Lazy Segment Tree](#lazy-segment-tree)
 
 ---
 ### Disjoint set union
@@ -398,6 +400,7 @@ struct Lca{ //  This is zero based
 	}
 };
 ```
+---
 
 ### Coordinate Compressor
 ```cpp
@@ -430,3 +433,109 @@ struct CoordinateCompressor {
 */
 };
 ```
+---
+
+### Iterative segment tree
+```cpp
+struct seg_tree{
+	int n;
+	vector<int> t;
+	seg_tree(vector<int> &a){
+		n = a.size();
+		t.assign(2*n, 0);
+		for(int i = 0 ; i < n ; i++) t[i + n] = a[i];
+		for(int i = n-1 ; i > 0 ; i--){
+			t[i] = t[i << 1]	+ t[i << 1 | 1];
+		}
+	}
+	void modify(int pos, int value){
+		pos += n;
+		for(t[pos] = value ; pos > 1 ; pos >>= 1){
+			t[pos >> 1] = t[pos] + t[pos^1];
+		}
+	}
+	int get(int l, int r){ // [l, r)
+		int res = 0;
+		for(l += n, r += n ; l < r ; l >>= 1, r >>= 1){
+			if(l & 1) res += t[l++];
+			if(r & 1) res += t[--r];
+		}
+		return res;
+	}
+};
+
+
+// If we want
+// 1) add a value to all elements in some interval;
+// 2) compute an element at some position.
+
+// void modify(int l, int r, int value) {
+  // for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
+    // if (l&1) t[l++] += value;
+    // if (r&1) t[--r] += value;
+  // }
+// }
+// 
+// int get(int p) {
+  // int res = 0;
+  // for (p += n; p > 0; p >>= 1) res += t[p];
+  // return res;
+// }
+```
+
+---
+
+### Lazy segment tree
+```cpp
+struct lazy_segtree{
+	vector<int> Tree, lazy;
+	int n;
+	lazy_segtree(int m){
+		n = m+1;
+		Tree.assign(4*n, 0);
+		lazy.assign(4*n, 0);
+	}
+	void push(int ix){
+		if(lazy[ix] != 0){
+			lazy[ix<<1] += lazy[ix];
+			lazy[ix<<1|1] += lazy[ix];
+			Tree[ix<<1] += lazy[ix];
+			Tree[ix<<1|1] += lazy[ix];
+			lazy[ix] = 0;
+		}
+	}
+	void calc(int ix){
+		Tree[ix] = max(Tree[ix << 1], Tree[ix << 1|1]);
+	}
+	int calc(int val1, int val2){
+		return max(val1, val2);
+	}
+	void update(int l, int r, int val, int ix, int lx, int rx){
+		if(lx >= r || rx <= l) return;
+		if(rx - lx != 1) push(ix);
+		if(lx >= l && rx <= r){
+			lazy[ix] += val;
+			Tree[ix] += val;
+			return;
+		}
+		int m = (lx + rx) >> 1;
+		update(l, r, val, ix << 1, lx, m);
+		update(l, r, val, ix << 1|1, m, rx);
+		calc(ix);
+	}
+	void update(int l, int r, int val){
+		update(l, r, val, 1, 0, n);
+	}
+	int get(int l, int r, int ix, int lx, int rx){
+		if(lx >= r || rx <= l) return 0;
+		if(rx - lx != 1)push(ix);
+		if(lx >= l && rx <= r) return Tree[ix];
+		int m = (lx + rx) >> 1;
+		return calc(get(l, r, ix<<1, lx, m) , get(l, r, ix<<1|1, m, rx));
+	}
+	inline int get(int l, int r){
+		return get(l, r, 1, 0, n);
+	}
+};
+```
+
