@@ -262,12 +262,13 @@ struct Prime{
 	Prime(int n){ // Process....Using Sieve and wheel factorisation
 		isPrime = vector<bool>(n+1, true);
 		isPrime[0] = isPrime[1] = false;
-		arr.emplace_back(2);
 		for(int i = 4 ; i <= n ; i+=2) isPrime[i] = false;
-		for(int i = 3 ; i <= n ; i+=2){
+		for(int i = 3 ; i*i <= n ; i+=2){
 			if(!isPrime[i]) continue;
-			arr.emplace_back(i);
 			for(int j = i*i ; j <= n ; j+=i) isPrime[j] = false;
+		}
+		for(int i = 2 ; i <= n ; i++){
+			if(isPrime[i]) arr.push_back(i);
 		}
 		cnt = arr.size();
 	}
@@ -285,17 +286,19 @@ struct Prime{
 		return res;
 	}
 	
-	map<int,int> factorise(int n){ // prime factoisation of number n
-		map<int,int> mp;
+	vector<int> factorise(int n){ // prime factorisation of number n
+		vector<int> a;
 		for(auto &i : arr){
-			if(i * i > n) break;
+			if(i * i > n){
+				break;
+			}
 			while(n % i == 0){
-				mp[i]++;
+				a.eb(i);
 				n /= i;
 			}
 		}
-		if(n > 1) mp[n]++;
-		return mp;
+		if(n > 1) a.eb(n);
+		return a;
 	}
 };
 ```
