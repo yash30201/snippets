@@ -16,6 +16,7 @@
 + [Lazy Segment Tree - range add, range max](lazy_sg1.md)
 + [Lazy Segment Tree - range add, range sum](lazy_sg2.md)
 + [Lazy Segment Tree - range assign, range sum](lazy_sg3.md)
++ [String splitter](string_split.md)
 
 
 
