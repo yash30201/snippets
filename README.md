@@ -18,6 +18,6 @@
 + [Lazy Segment Tree - range assign, range sum](lazy_sg3.md)
 + [String splitter](string_split.md)
 + [Bridge finder in undirected graph(Tarjan's algo)](tarjan.md)
-
++ [String : prefix and suffix function](string_pref_suff.md)
 
 
