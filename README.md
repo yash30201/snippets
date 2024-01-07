@@ -11,7 +11,7 @@
 + [Smallest Prime Factor](spf.md)
 + [Binomial Coefficients](bc.md)
 + [Lowest Common Ancestor(binary lifting)](lca.md)
-+ [Coordinate Compressor](#cc.md)
++ [Coordinate Compressor](cc.md)
 + [Iterative segment tree](sg_iter.md)
 + [Lazy Segment Tree - range add, range max](lazy_sg1.md)
 + [Lazy Segment Tree - range add, range sum](lazy_sg2.md)
